@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "node ./bin/www",
     "start": "node ./dist/myapp.js",
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "nodemon myapp.js"
   },
   "dependencies": {
     "@types/node": "^18.11.9",
