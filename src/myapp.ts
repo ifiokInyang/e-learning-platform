@@ -19,14 +19,6 @@ app.use('/img', express.static(__dirname + '/public/img'))
 app.set('views', (__dirname+'/views'))
 app.set('view engine', 'ejs')
 app.use('/', userRouters)
-//app.use('/about', userRouters)
-// app.use('/users', userRouters)
-
-
-//Sending request to the homepage
-//app.use('/register', userRouters)   //Register router
-// app.use('/login', userRouters)  //Login router
-//app.use('/', userRouters)   //Post router for form data
 
 
 app.listen(3232, () => {

@@ -27,17 +27,6 @@ const databaseInit = () => {
     fs_1.default.writeFileSync(db, "[]", 'utf-8');
 };
 databaseInit();
-// const databaseInit = () => {
-//     // fs.access(db, fs.constants.F_OK, (err: any) =>{
-//         // if (err) {
-//             fs.writeFile(db, p, 'utf-8', (err: any)=>{
-//                 if (err) console.error("An error occurred")
-//                 console.log("Successfully created database file")
-//             })
-//         // }
-//     // })
-// }
-// databaseInit()
 const registerRoute = (req, res) => {
     //     //hash the password
     let data = req.body;

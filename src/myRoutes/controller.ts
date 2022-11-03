@@ -16,18 +16,7 @@ const databaseInit = () => {
 fs.writeFileSync(db, "[]", 'utf-8')
 }
 databaseInit()
-// const databaseInit = () => {
-//     // fs.access(db, fs.constants.F_OK, (err: any) =>{
-//         // if (err) {
-//             fs.writeFile(db, p, 'utf-8', (err: any)=>{
-//                 if (err) console.error("An error occurred")
-//                 console.log("Successfully created database file")
-//             })
-//         // }
-//     // })
 
-// }
-// databaseInit()
 
 
 

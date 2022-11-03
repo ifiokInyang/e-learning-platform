@@ -6,7 +6,7 @@
     "test": "node ./bin/www",
     "start": "node ./dist/myapp.js",
     "build": "tsc",
-    "dev": "nodemon myapp.js"
+    "dev": "node myapp.js"
   },
   "dependencies": {
     "@types/node": "^18.11.9",
