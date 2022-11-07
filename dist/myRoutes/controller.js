@@ -18,6 +18,7 @@ const { validateUser } = require('./validator');
 const uuid_1 = require("uuid");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const _ = require('lodash');
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 //Generating user ids
 let userId = (0, uuid_1.v4)();
 const db = path_1.default.join(__dirname, 'database.json');
@@ -100,11 +101,50 @@ const registerRoute = (req, res) => {
 //         return next(); 
 //     res.redirect('/login'); 
 // } 
+const dashBoard = (req, res) => {
+    res.status(200).render('dashboard');
+};
+const postDetails = (req, res) => {
+    let body = req.body;
+    fs_1.default.readFile(db, 'utf8', (err, data) => {
+        if (err)
+            console.error('Error in reading file');
+        let parsed = JSON.parse(data);
+        if (parsed.Courses == undefined) {
+            console.log('first parsed is ', parsed);
+            let foundId = parsed.find((user) => user.id === body.id);
+            let courseArray = [];
+            courseArray.push(body);
+            let coursed = (Object.assign(Object.assign({}, foundId), { Courses: courseArray }));
+            console.log('coursed is ', coursed);
+            fs_1.default.writeFile(db, JSON.stringify(coursed), 'utf8', (err) => {
+                if (err)
+                    console.error('Error in writing file');
+                console.log('Successfully wrote to database');
+                res.status(200).render('dashboard');
+            });
+        }
+        else {
+            parsed.Courses.push(body);
+            fs_1.default.writeFile(db, JSON.stringify(parsed), 'utf8', (err) => {
+                if (err)
+                    console.error('Error in writing file');
+                console.log('Successfully wrote to database');
+                res.status(200).render('dashboard');
+            });
+        }
+        // res.status(301).redirect('/dashboard/:id/courses')
+    });
+};
+const displayCourses = (req, res) => {
+    console.log(req.body);
+    console.log(req.header);
+    console.log(req.headers);
+    console.log(req.params);
+    res.status(200).render('add_course');
+};
 const checkUserRequestingLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email_address, password } = req.body;
-    console.log('body is ', req.body.pass);
-    console.log('email is ', email_address);
-    console.log('pass ', password);
     //Reading from the database
     const dbContent = fs_1.default.readFileSync(db, 'utf-8');
     const parsedDbContent = JSON.parse(dbContent);
@@ -116,12 +156,41 @@ const checkUserRequestingLogin = (req, res) => __awaiter(void 0, void 0, void 0,
     if (!result) {
         return res.status(403).json({ message: 'Invalid credentials' });
     }
-    res.status(200).render('dashboard');
+    //Create and assign a token
+    const token = jsonwebtoken_1.default.sign({ _id: foundEmail.id }, `${process.env.TOKEN_SECRET}`);
+    // res.header('auth-token', token) //Setting the header with the token
+    // .redirect('/dashboard')
+    // res.setHeader('Authorization', 'Bearer ' + token);
+    res.redirect(300, `/dashboard/${foundEmail.id}`);
 });
 // checkUserRequestingLogin()
+const protectedRoute = (req, res) => {
+    res.json({
+        posts: {
+            title: 'My protected route',
+            description: 'This is a protected route'
+        }
+    });
+};
+const addCourse = (req, res) => {
+    const { id } = req.params;
+    console.log('id is ', id);
+    console.log('params id is ', req.params.id);
+    res.status(200).send('Hello');
+    //  fs.readFile(db, 'utf-8', (err, data) => {
+    //     if(err) console.error('Error in reading file')
+    //     else{
+    //     }
+    //  })
+};
 module.exports = {
     databaseInit,
     registerRoute,
-    checkUserRequestingLogin
+    checkUserRequestingLogin,
+    addCourse,
+    dashBoard,
+    postDetails,
+    protectedRoute,
+    displayCourses
 };
 //# sourceMappingURL=controller.js.map

@@ -26,122 +26,55 @@
         </div>
     </div>
 </div>
+<div class="admin">
+   <div class="container">
+    <h1 class="text-center mt-3 mb-3">Add Course</h1>
+    <div class="card">
+        <div class="card-header">Add course form</div>
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label>Title</label>
+                    <input type="text" name="title" id="title" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Description</label>
+                    <input type="text" name="description" id="description" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Price</label>
+                    <input type="text" name="price" id="price" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label>Image url:</label>
+                    <input type="text" name="image_url" id="image_url" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <button id="button" type="submit">Add Course</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<p id="demo">
+
+</p>
+   <a href="/deleteCourse" class="adminPrivileges">Delete course</a>
+   <a href="/editCourse" class="adminPrivileges">Edit course</a>
+</div>
+<div class="view">
+    <button id="view_courses">View All Courses</button>
+    
+</div>
+
 <div class="p-courses">
     <div class="line"></div>
     <p>explore curated courses</p>
     <div class="line"></div>
 </div>
-<div class="popular-container">
-<div class="popular-cards">
-    <img src="img/Java.jpeg" alt="Java course icon">
-    <p>Java Crash Course</p>
-    <p>$45</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/Json.jpeg" alt="Json icon">
-    <p>JSON Crash course</p>
-    <p>$25</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/big data.webp" alt="Big-data-icon" height="235px">
-    <p>[Full course] Big Data</p>
-    <p>$60</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/ler.jpeg" alt="coding-student-icon">
-    <p>Software Testing</p>
-    <p>$35</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/M:c learn.jpeg" alt="Machine-learning-icon">
-    <p>Machine Learning</p>
-    <p>$80</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/Machine learning.jpeg" alt="Robot-img">
-    <p>Robotics Full Course</p>
-    <p>$100</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/mc learn.jpeg" alt="machine icon">
-    <p id="over-flow">[Crash Course] <br>Machine Learning</p>
-    <p id="over-flow">$45</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/node.jpeg" alt="node.js-icon">
-    <p>Node js Full Course</p>
-    <p>$40</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/python.jpeg" alt="python-img">
-    <p>[Full Course] Python</p>
-    <p>$55</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
-<div class="popular-cards">
-    <img src="img/database-2394312__340.webp" alt="database-img" height="235px">
-    <p>[Full Course] Database</p>
-    <p>$65</p>
-    <div id="enroll-line">
-        <div class="enroll-line"></div>
-        <div class="enroll-line-special"></div>
-        <div class="enroll-line"></div>
-    </div>
-    <a href="/register" class="enroll">Add Course</a>
-</div>
+<div id="popular-container">
 </div>
 
 </div>
@@ -150,7 +83,68 @@
     <h3>All rights reserved @2022</h3>
 </footer>
 <script>
-    
+   
+    button.addEventListener('click',  (e)=>{
+        e.preventDefault()
+    const title = document.getElementById("title").value
+    const description = document.getElementById("description").value
+    const price = document.getElementById("price").value
+    const image_url = document.getElementById("image_url").value
+    const button = document.getElementById('button')
+    const show = document.getElementById("demo")
+        show.innerHTML = window.location.pathname
+       const userId= window.location.pathname.split('/')[2]
+        let data = {
+            title:title,
+            description:description,
+            price: price,
+            image_url: image_url,
+            id : userId
+        }
+        console.log(data)
+        const courseDisplay = document.getElementById('popular-container')
+        const create = document.createElement('h1')
+        create.innerHTML = `<div class="popular-cards">
+        <img src=${data.image_url} alt="node.js-icon">
+    <p>Title: ${data.title}</p>
+    <p>Price: ${data.price}</p>
+    <p>Description: ${data.description}</p>
+    <div id="enroll-line">
+        <div class="enroll-line"></div>
+        <div class="enroll-line-special"></div>
+        <div class="enroll-line"></div>
+    </div>
+    </div>`
+       courseDisplay.appendChild(create)
+    alert("Successfully added course")
+    })
+   
+   let id = window.location.pathname.split('/')[2]
+   console.log('id is', id)
+function checkCourses(){
+    const viewCourses = document.getElementById('view_courses')
+    viewCourses.addEventListener("click", (e)=>{
+        // e.preventDefault()
+        console.log('You are clicking me')
+        const myHeaders = new Headers({identifier: id})
+        // headers: {'Authorization': '[your API key]'}
+        fetch('/display_courses', {
+            method: "GET",
+            body: JSON.stringify({identifier: id}),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${id}`,
+                'id-head': myHeaders
+            }
+        })
+        .catch((error) =>{
+            console.error(Error)
+        })
+    })
+}
+checkCourses()
+
+ 
 </script>
 </body>
 </html>

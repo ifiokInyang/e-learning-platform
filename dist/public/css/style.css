@@ -102,7 +102,14 @@ div.learn-courses{
 #contacts{
   flex-wrap: wrap;
 }
-
+.admin {
+  display: flex;
+  margin-top: 3em;
+  justify-content: space-evenly;
+}
+.adminPrivileges{
+  font-size: 5em;
+}
 div #courses{
   display: flex;
   width: 100vw;

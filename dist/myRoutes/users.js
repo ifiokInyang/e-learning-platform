@@ -5,9 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const uuid_1 = require("uuid");
-const { registerRoute, getProfile, checkUserRequestingLogin } = require('./controller');
+const { registerRoute, postDetails, checkUserRequestingLogin, dashBoard, protectedRoute } = require('./controller');
+const { displayCourses } = require('./controller');
+const auth_1 = __importDefault(require("../middleware/auth"));
 //Initialize our router
-const router = express_1.default.Router();
+const router = express_1.default.Router({ mergeParams: true });
 //All routes in here are starting with /users
 //Generating user ids
 let userId = (0, uuid_1.v4)();
@@ -26,38 +28,17 @@ router.get('/register', (req, res, next) => {
 //router.post("/test", (req:Request,res:))
 router.post('/register', registerRoute);
 // hashPassword('data.password')
-// We will have to validate the entry before assigning it an id using joi
-//Check if it already exists using the email to read from the db
-//If it exists using 
-//the data to a variable while reading; read from my dattabase, convert to object. use array.find to check with the info in d database
-//res.error(404, sreve, this user already exist
-//else
-// Assign an id to it and Save it in our database by writing to it
 //Login route
 router.get('/login', (req, res) => {
     res.status(200).render('login');
 });
 //Route for successful login
 router.post('/login', checkUserRequestingLogin);
-//Route to validate logged in users
-// router.get('/profile', getProfile)
-// router.post('/login', passport.authenticate('local-login', { 
-//     //Success go to Profile Page / Fail go to login page 
-//     successRedirect : '/dashboard', 
-//     failureRedirect : '/register', 
-//     failureFlash : true 
-// })); 
-//check if email exists first
-//throw error message
-// comparePassword('req.body.password', 'databaseId')
-//validate if user exists, you will still read from database
-// then serve the dashboard page if it exists
-//if it does not response(404) message: You are not an admin, i can serve the homepage
-//if it exists, serve dashboard
 //Route for dashboard
-router.get('/dashboard', (req, res) => {
-    res.status(200).render('dashboard');
-});
+router.get('/dashboard/:id', dashBoard);
+router.post('/dashboard/:id', postDetails);
+router.get('/display_courses', displayCourses);
+router.get('/protected', auth_1.default, protectedRoute);
 //Route for successful registration and adding user to our database
 router.post('/', (req, res) => {
     const user = req.body;
@@ -74,13 +55,7 @@ router.post('/', (req, res) => {
     padding: 10px;"><h1> Congratulations ${user.first_name}, your account has been created!!<a href="./login"> go to login</a></h1></div>
     `);
 });
-//This route checks if user exists, then add course
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    // const foundUser = registrationData.find((user)=>user.id === req.params.id)
-    //Here, i will have to read from the database to find users with a particular id
-    // res.send(foundUser)
-});
+// router.get(`/dashboard/:id/add_course`, dashBoard)
 //Route to delete courses
 router.delete('/:id', (req, res) => {
     //Getting the current id to check

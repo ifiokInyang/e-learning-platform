@@ -5,9 +5,16 @@ const { validateUser } = require('./validator')
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt'
 const _ = require('lodash')
+import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import { env } from 'process'
+
+
 //Generating user ids
 let userId = uuidv4()
+
+
+
 
 const db = path.join(__dirname, 'database.json')
 console.log('db is ', db)
@@ -94,11 +101,49 @@ let parsedDbContent = JSON.parse(dbContent)
 //     res.redirect('/login'); 
 // } 
 
+const dashBoard = (req: Request, res: Response) => {
+     res.status(200).render('dashboard')
+    }
+
+const postDetails = (req: Request, res: Response) => {
+    let body = req.body
+    fs.readFile(db, 'utf8', (err, data) => {
+        if(err) console.error('Error in reading file')
+        let parsed = JSON.parse(data)
+        if(parsed.Courses ==undefined){
+            console.log('first parsed is ', parsed)
+            let foundId = parsed.find((user: any) => user.id === body.id)
+            let courseArray = []
+            courseArray.push(body)
+            let coursed = ({...foundId, Courses: courseArray})
+            console.log('coursed is ', coursed)
+            fs.writeFile(db, JSON.stringify(coursed), 'utf8', (err) => {
+                if(err) console.error('Error in writing file')
+                console.log('Successfully wrote to database')
+            res.status(200).render('dashboard')
+            })
+        } else {
+            parsed.Courses.push(body)
+            fs.writeFile(db, JSON.stringify(parsed), 'utf8', (err) => {
+                if(err) console.error('Error in writing file')
+                console.log('Successfully wrote to database')
+            res.status(200).render('dashboard')
+            })
+        }
+       
+        // res.status(301).redirect('/dashboard/:id/courses')
+    })
+}
+const displayCourses = (req: Request, res: Response) => {
+    console.log(req.body)
+    console.log(req.header)
+    console.log(req.headers)
+    console.log(req.params)
+    res.status(200).render('add_course')
+}
+
 const checkUserRequestingLogin = async(req: Request, res: Response) => {
     const { email_address, password } = req.body
-    console.log('body is ', req.body.pass)
-    console.log('email is ', email_address)
-    console.log('pass ', password)
     //Reading from the database
     const dbContent = fs.readFileSync(db, 'utf-8')
     const parsedDbContent = JSON.parse(dbContent)
@@ -109,14 +154,54 @@ const checkUserRequestingLogin = async(req: Request, res: Response) => {
             if (!result) {
                 return res.status(403).json({message: 'Invalid credentials'})
             }
-            res.status(200).render('dashboard')
+
+            //Create and assign a token
+            const token = jwt.sign({_id: foundEmail.id}, `${process.env.TOKEN_SECRET}`)  
+            // res.header('auth-token', token) //Setting the header with the token
+            // .redirect('/dashboard')
+
+
+            // res.setHeader('Authorization', 'Bearer ' + token);
+            res.redirect(300, `/dashboard/${foundEmail.id}`)
    
 }
 // checkUserRequestingLogin()
+
+const protectedRoute = (req: Request, res: Response) => {
+        res.json({
+            posts: {
+                title: 'My protected route',
+            description: 'This is a protected route'
+            }
+        }) 
+    }
+
+
+const addCourse = (req: Request, res: Response) => {
+    const { id } = req.params
+    console.log('id is ', id)
+        console.log('params id is ', req.params.id)
+        res.status(200).send('Hello')
+//  fs.readFile(db, 'utf-8', (err, data) => {
+//     if(err) console.error('Error in reading file')
+//     else{
+
+//     }
+//  })
+
+}
+
+
+
 
 
 module.exports = {
     databaseInit,
     registerRoute,
-    checkUserRequestingLogin
-}
+    checkUserRequestingLogin,
+    addCourse, 
+    dashBoard,
+    postDetails,
+    protectedRoute,
+    displayCourses
+};
